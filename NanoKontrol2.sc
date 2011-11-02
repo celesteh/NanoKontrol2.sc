@@ -1,16 +1,112 @@
 /*
-	TODO: 
+	TODO for original nanoKontrol: 
 
-		- make collections: for 
-			faders.do({})
-			knobs.do({})
 		- implement scenes
+		
+		Done from pre-forked TODO:
+			knobs.do({}) iterates through a collection of NKController s
+			faders.do({}) iterates through a collection of NKController s
+			
+	TODO for nanoKontrol2:
+	
+		make buttons light up
 		
 */
 
+
+NanoKontrol2 : NanoKontrol {
+
+	var sBts, mBts, rBts;
+	
+	*new{
+		^super.new.initNanoKontrol;
+	}
+	
+	initNanoKontrol{	
+		
+		faderDict = IdentityDictionary[
+			\fader1 -> NKController.new(0),
+			\fader2 -> NKController.new(1),
+			\fader3 -> NKController.new(2),
+			\fader4 -> NKController.new(3),
+			\fader5 -> NKController.new(4),
+			\fader6 -> NKController.new(5),
+			\fader7 -> NKController.new(6),
+			\fader8 -> NKController.new(7)
+		];
+		
+		knobDict = IdentityDictionary[
+			\knob1 -> NKController.new(16),
+			\knob2 -> NKController.new(17),
+			\knob3 -> NKController.new(18),
+			\knob4 -> NKController.new(19),
+			\knob5 -> NKController.new(20),
+			\knob6 -> NKController.new(21),
+			\knob7 -> NKController.new(22),
+			\knob8 -> NKController.new(23)
+		];
+		
+		sBts = IdentityDictionary[
+			\sBt1 -> NKButton.new(32),
+			\sBt2 -> NKButton.new(33),
+			\sBt3 -> NKButton.new(34),
+			\sBt4 -> NKButton.new(35),
+			\sBt5 -> NKButton.new(36),
+			\sBt6 -> NKButton.new(37),
+			\sBt7 -> NKButton.new(38),
+			\sBt8 -> NKButton.new(39)
+		];
+
+		mBts = IdentityDictionary[
+			\mBt1 -> NKButton.new(48),
+			\mBt2 -> NKButton.new(49),
+			\mBt3 -> NKButton.new(50),
+			\mBt4 -> NKButton.new(51),
+			\mBt5 -> NKButton.new(52),
+			\mBt6 -> NKButton.new(53),
+			\mBt7 -> NKButton.new(54),
+			\mBt8 -> NKButton.new(55)
+		];
+
+
+		rBts = IdentityDictionary[
+			\rBt1 -> NKButton.new(64),
+			\rBt2 -> NKButton.new(65),
+			\rBt3 -> NKButton.new(66),
+			\rBt4 -> NKButton.new(67),
+			\rBt5 -> NKButton.new(68),
+			\rBt6 -> NKButton.new(69),
+			\rBt7 -> NKButton.new(70),
+			\rBt8 -> NKButton.new(71),
+		];
+
+		
+		transportBts= IdentityDictionary[
+			\playBt   -> NKButton.new(41),
+			\stopBt   -> NKButton.new(42),
+			\recBt   -> NKButton.new(45),
+			\rewindBt -> NKButton.new(43),
+			\ffwBt    -> NKButton.new(44),
+			\fwdTrackBt   -> NKButton.new(59),
+			\bkTrackBt   -> NKButton.new(58),
+			\cycleBt   -> NKButton.new(46),
+			\setMarkerBt   -> NKButton.new(60),
+			\bkMarkerBt   -> NKButton.new(61),
+			\fwdMarkerBt   -> NKButton.new(62)
+
+
+		];	
+	
+		controllers = IdentityDictionary.new;
+		controllers.putAll(faderDict, knobDict, sBts, mBts, rBts, transportBts);
+
+	}
+}
+
+
 NanoKontrol {
 
-	var faders, knobs, topBts, bottomBts, transportBts;
+	var faderDict, knobDict, topBts, bottomBts, transportBts;
 	var <controllers;
 	
 	
@@ -20,7 +116,7 @@ NanoKontrol {
 	
 	initNanoKontrol{	
 		
-		faders = IdentityDictionary[
+		faderDict = IdentityDictionary[
 			\fader1 -> NKController.new(2),
 			\fader2 -> NKController.new(3),
 			\fader3 -> NKController.new(4),
@@ -32,7 +128,7 @@ NanoKontrol {
 			\fader9 -> NKController.new(13)
 		];
 		
-		knobs = IdentityDictionary[
+		knobDict = IdentityDictionary[
 			\knob1 -> NKController.new(14),
 			\knob2 -> NKController.new(15),
 			\knob3 -> NKController.new(16),
@@ -78,7 +174,7 @@ NanoKontrol {
 		];	
 	
 		controllers = IdentityDictionary.new;
-		controllers.putAll(faders, knobs, topBts, bottomBts, transportBts);
+		controllers.putAll(faderDict, knobDict, topBts, bottomBts, transportBts);
 
 	}
 	
@@ -93,6 +189,14 @@ NanoKontrol {
 				c.removeResponders;
 			})
 		});
+	}
+	
+	faders {
+		^faderDict.values;
+	}
+	
+	knobs {
+		^knobDict.values;
 	}
 	
 }
