@@ -3,9 +3,9 @@
 
 		- implement scenes
 		
-		Done from pre-forked TODO:
-			knobs.do({}) iterates through a collection of NKController s
-			faders.do({}) iterates through a collection of NKController s
+		- do something meaningul with Collectionf for Knobs and Faders
+			knobs.do({}) 
+			faders.do({}) 
 			
 	TODO for nanoKontrol2:
 	
@@ -191,6 +191,8 @@ NanoKontrol {
 		});
 	}
 	
+	// this is stupid
+	
 	faders {
 		^faderDict.values;
 	}
@@ -205,6 +207,7 @@ NKController {
 	
 	var <num;
 	var responder;
+	var <value;
 	
 	*new{|n|
 		^super.new.initNKController(n);
@@ -212,6 +215,9 @@ NKController {
 	
 	initNKController{|n|
 		num = n;
+		responder = CCResponder({|src, chan, num, vel| 
+			value = vel;
+		}, num:num);
 	}
 	
 	// setter for responder
@@ -220,12 +226,17 @@ NKController {
 
 		responder = CCResponder({|src, chan, num, vel| 
 			action.value(vel);  // to make explicit use of velocity, we pass it as a param
+			value = vel;
 		}, num:num);
 
 	}
 	
 	removeResponders{
 		if (responder != nil, {responder.remove;}); // remove if already assigned
+		
+		responder = CCResponder({|src, chan, num, vel| 
+			value = vel;
+		}, num:num);
 	}
 
 }
