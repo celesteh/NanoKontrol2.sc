@@ -1,106 +1,128 @@
 /*
-	TODO for original nanoKontrol: 
+	TODO for original nanoKontrol:
 
 		- implement scenes
-		
-		- do something meaningul with Collectionf for Knobs and Faders
-			knobs.do({}) 
-			faders.do({}) 
-			
+
+		- do something meaningul with Collections for Knobs and Faders
+			knobs.do({})
+			faders.do({})
+
 	TODO for nanoKontrol2:
-	
+
 		make buttons light up
-		
+
 */
 
 
 NanoKontrol2 : NanoKontrol {
 
-	var sBts, mBts, rBts;
-	
+	var sBts, mBts, rBts, midi;
+
 	*new{
 		^super.new.initNanoKontrol;
 	}
-	
-	initNanoKontrol{	
-		
+
+	initNanoKontrol{
+
+
+		//MIDIClient.init;
+
+		//MIDIClient.sources.do({|m, i|
+			//m.postln;
+			//m.name.postln;
+			//m.name.contains("nanoKONTROL2").if({// check this
+				//midi = MIDIOut(i);
+				//midi.connect(0);
+			//i .postln;
+			//});
+		//});
+
+		//midi = MIDIIn.findPort("nano", "dunno"); // check this
+
 		faderDict = IdentityDictionary[
-			\fader1 -> NKController.new(0),
-			\fader2 -> NKController.new(1),
-			\fader3 -> NKController.new(2),
-			\fader4 -> NKController.new(3),
-			\fader5 -> NKController.new(4),
-			\fader6 -> NKController.new(5),
-			\fader7 -> NKController.new(6),
-			\fader8 -> NKController.new(7)
+			\fader1 -> NKController.new(0, midi),
+			\fader2 -> NKController.new(1, midi),
+			\fader3 -> NKController.new(2, midi),
+			\fader4 -> NKController.new(3, midi),
+			\fader5 -> NKController.new(4, midi),
+			\fader6 -> NKController.new(5, midi),
+			\fader7 -> NKController.new(6, midi),
+			\fader8 -> NKController.new(7, midi)
 		];
-		
+
 		knobDict = IdentityDictionary[
-			\knob1 -> NKController.new(16),
-			\knob2 -> NKController.new(17),
-			\knob3 -> NKController.new(18),
-			\knob4 -> NKController.new(19),
-			\knob5 -> NKController.new(20),
-			\knob6 -> NKController.new(21),
-			\knob7 -> NKController.new(22),
-			\knob8 -> NKController.new(23)
+			\knob1 -> NKController.new(16, midi),
+			\knob2 -> NKController.new(17, midi),
+			\knob3 -> NKController.new(18, midi),
+			\knob4 -> NKController.new(19, midi),
+			\knob5 -> NKController.new(20, midi),
+			\knob6 -> NKController.new(21, midi),
+			\knob7 -> NKController.new(22, midi),
+			\knob8 -> NKController.new(23, midi)
 		];
-		
+
 		sBts = IdentityDictionary[
-			\sBt1 -> NKButton.new(32),
-			\sBt2 -> NKButton.new(33),
-			\sBt3 -> NKButton.new(34),
-			\sBt4 -> NKButton.new(35),
-			\sBt5 -> NKButton.new(36),
-			\sBt6 -> NKButton.new(37),
-			\sBt7 -> NKButton.new(38),
-			\sBt8 -> NKButton.new(39)
+			\sBt1 -> NKButton.new(32, midi),
+			\sBt2 -> NKButton.new(33, midi),
+			\sBt3 -> NKButton.new(34, midi),
+			\sBt4 -> NKButton.new(35, midi),
+			\sBt5 -> NKButton.new(36, midi),
+			\sBt6 -> NKButton.new(37, midi),
+			\sBt7 -> NKButton.new(38, midi),
+			\sBt8 -> NKButton.new(39, midi)
 		];
 
 		mBts = IdentityDictionary[
-			\mBt1 -> NKButton.new(48),
-			\mBt2 -> NKButton.new(49),
-			\mBt3 -> NKButton.new(50),
-			\mBt4 -> NKButton.new(51),
-			\mBt5 -> NKButton.new(52),
-			\mBt6 -> NKButton.new(53),
-			\mBt7 -> NKButton.new(54),
-			\mBt8 -> NKButton.new(55)
+			\mBt1 -> NKButton.new(48, midi),
+			\mBt2 -> NKButton.new(49, midi),
+			\mBt3 -> NKButton.new(50, midi),
+			\mBt4 -> NKButton.new(51, midi),
+			\mBt5 -> NKButton.new(52, midi),
+			\mBt6 -> NKButton.new(53, midi),
+			\mBt7 -> NKButton.new(54, midi),
+			\mBt8 -> NKButton.new(55, midi)
 		];
 
 
 		rBts = IdentityDictionary[
-			\rBt1 -> NKButton.new(64),
-			\rBt2 -> NKButton.new(65),
-			\rBt3 -> NKButton.new(66),
-			\rBt4 -> NKButton.new(67),
-			\rBt5 -> NKButton.new(68),
-			\rBt6 -> NKButton.new(69),
-			\rBt7 -> NKButton.new(70),
-			\rBt8 -> NKButton.new(71),
+			\rBt1 -> NKButton.new(64, midi),
+			\rBt2 -> NKButton.new(65, midi),
+			\rBt3 -> NKButton.new(66, midi),
+			\rBt4 -> NKButton.new(67, midi),
+			\rBt5 -> NKButton.new(68, midi),
+			\rBt6 -> NKButton.new(69, midi),
+			\rBt7 -> NKButton.new(70, midi),
+			\rBt8 -> NKButton.new(71, midi),
 		];
 
-		
+
 		transportBts= IdentityDictionary[
-			\playBt   -> NKButton.new(41),
-			\stopBt   -> NKButton.new(42),
-			\recBt   -> NKButton.new(45),
-			\rewindBt -> NKButton.new(43),
-			\ffwBt    -> NKButton.new(44),
-			\fwdTrackBt   -> NKButton.new(59),
-			\bkTrackBt   -> NKButton.new(58),
-			\cycleBt   -> NKButton.new(46),
-			\setMarkerBt   -> NKButton.new(60),
-			\bkMarkerBt   -> NKButton.new(61),
-			\fwdMarkerBt   -> NKButton.new(62)
+			\playBt   -> NKButton.new(41, midi),
+			\stopBt   -> NKButton.new(42, midi),
+			\recBt   -> NKButton.new(45, midi),
+			\rewindBt -> NKButton.new(43, midi),
+			\ffwBt    -> NKButton.new(44, midi),
+			\fwdTrackBt   -> NKButton.new(59, midi),
+			\bkTrackBt   -> NKButton.new(58, midi),
+			\cycleBt   -> NKButton.new(46, midi),
+			\setMarkerBt   -> NKButton.new(60, midi),
+			\bkMarkerBt   -> NKButton.new(61, midi),
+			\fwdMarkerBt   -> NKButton.new(62, midi)
 
 
-		];	
-	
+		];
+
 		controllers = IdentityDictionary.new;
 		controllers.putAll(faderDict, knobDict, sBts, mBts, rBts, transportBts);
 
 	}
+
+	at{ |sym|
+		^controllers.at(sym);
+	}
+
+
+
 }
 
 
@@ -108,14 +130,14 @@ NanoKontrol {
 
 	var faderDict, knobDict, topBts, bottomBts, transportBts;
 	var <controllers;
-	
-	
+
+
 	*new{
 		^super.new.initNanoKontrol;
 	}
-	
-	initNanoKontrol{	
-		
+
+	initNanoKontrol{
+
 		faderDict = IdentityDictionary[
 			\fader1 -> NKController.new(2),
 			\fader2 -> NKController.new(3),
@@ -127,7 +149,7 @@ NanoKontrol {
 			\fader8 -> NKController.new(12),
 			\fader9 -> NKController.new(13)
 		];
-		
+
 		knobDict = IdentityDictionary[
 			\knob1 -> NKController.new(14),
 			\knob2 -> NKController.new(15),
@@ -139,7 +161,7 @@ NanoKontrol {
 			\knob8 -> NKController.new(21),
 			\knob9 -> NKController.new(22)
 		];
-		
+
 		topBts = IdentityDictionary[
 			\topBt1 -> NKButton.new(23),
 			\topBt2 -> NKButton.new(24),
@@ -163,7 +185,7 @@ NanoKontrol {
 			\bottomBt8 -> NKButton.new(40),
 			\bottomBt9 -> NKButton.new(41)
 		];
-		
+
 		transportBts= IdentityDictionary[
 			\playBt   -> NKButton.new(45),
 			\stopBt   -> NKButton.new(46),
@@ -171,18 +193,18 @@ NanoKontrol {
 			\rewindBt -> NKButton.new(47),
 			\ffwBt    -> NKButton.new(48),
 			\loopBt   -> NKButton.new(49)
-		];	
-	
+		];
+
 		controllers = IdentityDictionary.new;
 		controllers.putAll(faderDict, knobDict, topBts, bottomBts, transportBts);
 
 	}
-	
-	doesNotUnderstand { arg selector ... args;	
+
+	doesNotUnderstand { arg selector ... args;
 		var controller = controllers.at(selector);
 		^ controller ?? {super.doesNotUnderstand( selector, args)};
 	}
-	
+
 	removeAllResponders {
 		controllers.do({|cDict|
 			cDict.do({|c|
@@ -190,81 +212,107 @@ NanoKontrol {
 			})
 		});
 	}
-	
+
 	// this is stupid
-	
+
 	faders {
 		^faderDict.values;
 	}
-	
+
 	knobs {
 		^knobDict.values;
 	}
-	
+
+	action_{|sym, act|
+
+		^controllers.at(sym).action_(act);
+	}
+
+	setAction{|sym, act|
+		^this.action_(sym, act)
+	}
+
+	at{ |sym|
+		^controllers.at(sym);
+	}
+
+
 }
 
 NKController {
-	
+
 	var <num;
 	var responder;
 	var <value;
-	
-	*new{|n|
-		^super.new.initNKController(n);
+	var uid;
+
+	*new{|n, midi|
+		^super.new.initNKController(n, midi);
 	}
-	
-	initNKController{|n|
+
+	initNKController{|n, midi|
 		num = n;
-		responder = CCResponder({|src, chan, num, vel| 
+		value = 0;
+		midi.notNil.if({
+			uid = midi.uid;
+			uid.postln;
+		});
+
+		responder = CCResponder({|src, chan, num, vel|
 			value = vel;
-		}, num:num);
+		}, uid, num:num);
 	}
-	
+
 	// setter for responder
-	onChanged_ { |action| 
+	onChanged_ { |act|
 		if (responder != nil, {responder.remove;}); // remove if already assigned
 
-		responder = CCResponder({|src, chan, num, vel| 
-			action.value(vel);  // to make explicit use of velocity, we pass it as a param
+		responder = CCResponder({|src, chan, num, vel|
+			act.value(vel);  // to make explicit use of velocity, we pass it as a param
 			value = vel;
-		}, num:num);
+		}, uid, num:num);
 
 	}
-	
+
+	action_ {|act|
+		^this.onChanged_(act);
+	}
+
+
 	removeResponders{
 		if (responder != nil, {responder.remove;}); // remove if already assigned
-		
-		responder = CCResponder({|src, chan, num, vel| 
+
+		responder = CCResponder({|src, chan, num, vel|
 			value = vel;
-		}, num:num);
+		}, uid, num:num);
 	}
 
 }
 
 NKButton : NKController {
-	
+
 	var pressResponder, releaseResponder;
-	
+
 	onPress_{|action|
 		if (pressResponder != nil, {pressResponder.remove;}); // remove if already assigned
 
-		pressResponder = CCResponder({|src, chan, num, vel| 
+		pressResponder = CCResponder({|src, chan, num, vel|
 			if (vel == 127, {action.value()})
-		}, num:num);
+		}, uid, num:num);
 	}
 
 	onRelease_{|action|
 		if (releaseResponder != nil, {releaseResponder.remove;}); // remove if already assigned
 
-		releaseResponder = CCResponder({|src, chan, num, vel| 
+		releaseResponder = CCResponder({|src, chan, num, vel|
 			if (vel == 0, {action.value()})
-		}, num:num);
+		}, uid, num:num);
 	}
-	
+
 	removeResponders{
 		super.removeResponders();
 		if (pressResponder != nil, {pressResponder.remove;}); // remove if already assigned
 		if (releaseResponder != nil, {releaseResponder.remove;}); // remove if already assigned
 	}
-	
+
 }
